@@ -1,0 +1,5 @@
+
+/kms_signer/bin
+/kms_signer/obj
+*.exe
+/lambda_c2pasign/obj

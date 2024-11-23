@@ -1,0 +1,72 @@
+{
+    "alg": "es256",
+    "sign_cert": "es256_certs.pem",
+    "ta_url": "http://timestamp.digicert.com",
+    "claim_generator_info": [
+        {
+            "name": "Demo-Signer",
+            "version": "1.0"
+        }
+    ],
+    "assertions": [
+        {
+            "label": "c2pa.actions",
+            "data": {
+                "actions": [
+                    {
+                        "action": "c2pa.opened"
+                    },
+                    {
+                        "action": "c2pa.color_adjustments",
+                        "parameters": {
+                            "name": "brightnesscontrast"
+                        }
+                    },
+                    {
+                        "action": "c2pa.placed"
+                    }
+                ]
+            }
+        },
+        {
+            "label": "de.wdr.custom",
+            "data": {
+                "organization": "Westdeutscher Rundfunk ",
+                "platform": "My Platform",
+                "news": [
+                    {
+                        "info": " Comment, claims...",
+                        "person": "Journalist",
+                        "time": "Time",
+                        "location": "Location"
+                    }
+                ]
+            }
+        },
+        {
+            "label": "stds.schema-org.ClaimReview",
+            "data": {
+                "@context": "http://schema.org",
+                "@type": "ClaimReview",
+                "author": {
+                    "@type": "Organization",
+                    "name": "WDR"
+                },
+                "claimReviewed": "Claim review",
+                "datePublished": "Here Date",
+                "itemReviewed": {
+                    "@type": "ImageObject",
+                    "caption": "What video"
+                },
+                "reviewBody": "My review",
+                "reviewRating": {
+                    "@type": "Rating",
+                    "alternateName": "Verified",
+                    "bestRating": "5",
+                    "ratingValue": "5",
+                    "worstRating": "1"
+                }
+            }
+        }
+    ]
+}

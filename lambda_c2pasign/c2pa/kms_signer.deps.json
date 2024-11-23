@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "kms_signer/1.0.0": {
+        "dependencies": {
+          "AWSSDK.KeyManagementService": "3.7.400.53"
+        },
+        "runtime": {
+          "kms_signer.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.400.53": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.53"
+          }
+        }
+      },
+      "AWSSDK.KeyManagementService/3.7.400.53": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.400.53"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.KeyManagementService.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.400.53"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "kms_signer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AWSSDK.Core/3.7.400.53": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OwJTHfD3tXKLPiB/UUr6SSigFycQm6JNTReh5j2kYJP0CgcZmV+qeePEpIptxCVbq28esef/8hdzezkzNhN+fA==",
+      "path": "awssdk.core/3.7.400.53",
+      "hashPath": "awssdk.core.3.7.400.53.nupkg.sha512"
+    },
+    "AWSSDK.KeyManagementService/3.7.400.53": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RyBv5ZgUAzvLkF685BIx/ey+0KNY7IrFNImQdggqYVm0zyS0nOLu+2sV7Kg3bF6QT7X1tybVNKYhnz07ET5DVQ==",
+      "path": "awssdk.keymanagementservice/3.7.400.53",
+      "hashPath": "awssdk.keymanagementservice.3.7.400.53.nupkg.sha512"
+    }
+  }
+}
