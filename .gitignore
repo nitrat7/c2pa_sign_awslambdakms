@@ -3,3 +3,4 @@
 /kms_signer/obj
 *.exe
 /lambda_c2pasign/obj
+/.vs
