@@ -28,13 +28,13 @@
     <None Update="c2pa\c2patool">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="c2pa\kms_signer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="c2pa\kms_signer.deps.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="c2pa\kms_signer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="c2pa\kms_signer.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="c2pa\kms_signer.runtimeconfig.json">
@@ -44,9 +44,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="certs\es256_certs.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="certs\wdr_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

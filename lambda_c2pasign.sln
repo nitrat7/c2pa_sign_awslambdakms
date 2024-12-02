@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lambda_c2pasign", "lambda_c2pasign\lambda_c2pasign.csproj", "{4756DFF9-F3AD-47DC-9251-C9D72594B232}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6945C589-A61A-4758-A0FD-4FA247D26129} = {6945C589-A61A-4758-A0FD-4FA247D26129}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kms_signer", "kms_signer\kms_signer.csproj", "{6945C589-A61A-4758-A0FD-4FA247D26129}"
 EndProject

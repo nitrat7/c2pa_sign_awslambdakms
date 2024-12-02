@@ -1,14 +1,9 @@
 ﻿using Amazon;
-using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Transfer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace c2panalyze2
+namespace c2panalyze
 {
     public class s3Load
     {
@@ -18,8 +13,6 @@ namespace c2panalyze2
         private static string aws_secret = "";
 
         private static RegionEndpoint aws_region;
-
-        private static IAmazonS3 client;
 
         private static string errormessage = "";
 
@@ -285,6 +278,4 @@ namespace c2panalyze2
             return AWSEndpoint;
         }
     }
-
-    
 }

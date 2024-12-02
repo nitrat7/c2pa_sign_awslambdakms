@@ -17,12 +17,6 @@
                         "action": "c2pa.opened"
                     },
                     {
-                        "action": "c2pa.color_adjustments",
-                        "parameters": {
-                            "name": "brightnesscontrast"
-                        }
-                    },
-                    {
                         "action": "c2pa.placed"
                     }
                 ]
@@ -41,31 +35,6 @@
                         "location": "Location"
                     }
                 ]
-            }
-        },
-        {
-            "label": "stds.schema-org.ClaimReview",
-            "data": {
-                "@context": "http://schema.org",
-                "@type": "ClaimReview",
-                "author": {
-                    "@type": "Organization",
-                    "name": "WDR"
-                },
-                "claimReviewed": "Claim review",
-                "datePublished": "Here Date",
-                "itemReviewed": {
-                    "@type": "ImageObject",
-                    "caption": "What video"
-                },
-                "reviewBody": "My review",
-                "reviewRating": {
-                    "@type": "Rating",
-                    "alternateName": "Verified",
-                    "bestRating": "5",
-                    "ratingValue": "5",
-                    "worstRating": "1"
-                }
             }
         }
     ]

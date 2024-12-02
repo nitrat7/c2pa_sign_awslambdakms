@@ -4,3 +4,8 @@
 *.exe
 /lambda_c2pasign/obj
 /.vs
+/lambda_c2pasign/bin
+doc/.DS_Store
+kms_signer/kms_signer.csproj.user
+/kms_signer/Properties
+lambda_c2pasign/c2pa/kms_signer.pdb
