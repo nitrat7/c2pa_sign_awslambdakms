@@ -1,16 +1,60 @@
 
 # c2pa aws lambda sign demo with aws kms
 
-## Preperations for setup private key import for AWS KMS
+## Setup AWS KMS for private key import
 
 1. convert private key in binary format (.der)
-   
-``
+ ``
 openssl pkcs8 -topk8 -inform PEM -outform DER -in es256_private.key -out es256_private.der -nocrypt
 ``
+Now we have private key `es256_private.der`
+2. Create KMS Key with:
+``
+aws kms create-key --key-spec ECC_NIST_P256 --key-usage SIGN_VERIFY --origin EXTERNAL
+``
+Check for output, please write down KeyId (needed for next steps)
 
-2. Import with wrapping algorithm `RSAES_OAEP_SHA_256` and a RSA key 4096 bit, ref  https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys-encrypt-key-material.html
+3. Navigate to AWS KMS Console and choose appropiate Key with given KeyId (see 3.)
+ - Navigate to "Key Material" and choose "Import key material".
+ - Choose wrapping key spec `RSA_4096` and wrapping algorithm `RSAES_OAEP_SHA_256`
+ - Click on "Download wrapping public key and import token"
+ - You will download a ZIP File containg both wrapping public key and import token
+ - Get `WrappingPublikKey.bin` from ZIP and ...
+4. Encrypt private key `es256_private.der` (see 1.) with Wrappingpublickey (see.3)
+```
+openssl pkeyutl \
+    -encrypt \
+    -in es256_private.der \
+    -out EncryptedKeyMaterial.bin \
+    -inkey WrappingPublicKey.bin \
+    -keyform DER \
+    -pubin \
+    -pkeyopt rsa_padding_mode:oaep \
+    -pkeyopt rsa_oaep_md:sha256 \
+    -pkeyopt rsa_mgf1_md:sha256
+```
+5. Now let's import the encrypted Key Material with given KeyID and ImportToken and "valid-to" Timestamp
+```
+aws kms import-key-material \
+    --key-id <KeyId> \
+    --encrypted-key-material fileb://EncryptedKeyMaterial.bin \
+    --import-token fileb://ImportToken.bin \
+    --expiration-model KEY_MATERIAL_EXPIRES \
+    --valid-to 2025-09-21T19:00:00Z 
+```
+5. Now KMS with Key is ready to use:-)
 
+#### Pre-requistes
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/prerequisites.html
+
+## Deployment of Application via AWS SAM
+Check out repository
+```
+cd lambda_c2pasign
+sam build
+sam deploy --guided
+```
+Once you define `KMS Key ID of used KMS Signer Key`, please use KeyId of previously created KMS Key.
 
 ## Short Introduction in running c2patool with AWS KMS
 

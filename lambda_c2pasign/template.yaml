@@ -1,0 +1,164 @@
+{
+	"Transform": "AWS::Serverless-2016-10-31",
+	"Parameters": {
+		"s3BucketPathEnv": {
+			"Description": "Name of Folder for uploading data",
+			"Type": "String",
+			"Default": "data",
+			"MaxLength": 50
+		},
+		"s3BucketPathSignedEnv": {
+			"Description": "Name of Folder for signed data",
+			"Type": "String",
+			"Default": "data_sign",
+			"MaxLength": 50
+		},
+		"SigningKeyEnv": {
+			"Description": "KMS Key ID of used KMS Signer Key",
+			"Type": "String",
+			"Default": "45c6d6f5-2cbc-4eed-8fd5-9bcec8b2fa47"
+		}
+	},
+
+	"Resources": {
+		"FunctionC2PASign": {
+			"Type": "AWS::Serverless::Function",
+			"Properties": {
+				"Description": {
+					"Fn::Sub": [
+						"Stack ${AWS::StackName} Function ${ResourceName}",
+						{
+							"ResourceName": "FunctionC2PASign"
+						}
+					]
+				},
+				"CodeUri": null,
+				"Handler": "lambda_c2pasign::c2panalyze.Function::FunctionHandlerSign",
+				"Runtime": "dotnet8",
+				"PackageType": "Zip",
+				"Architectures": [
+					"x86_64"
+				],
+				"MemorySize": 3008,
+				"Timeout": 600,
+				"Tracing": "Active",
+				"Events": {
+					"BucketC2PASign": {
+						"Type": "S3",
+						"Properties": {
+							"Bucket": {
+								"Ref": "BucketC2PASign"
+							},
+							"Events": [
+								"s3:ObjectCreated:*"
+							],
+							"Filter": {
+								"S3Key": {
+									"Rules": [
+										{
+											"Name": "prefix",
+											"Value": {
+												"Fn::Join": [
+													"",
+													[
+														{ "Ref": "s3BucketPathEnv" },
+														"/"
+													]
+												]
+											}
+										},
+										{
+											"Name": "suffix",
+											"Value": ".mp4"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"Environment": {
+					"Variables": {
+						"kmsKeyId": {
+							"Ref": "SigningKeyEnv"
+						},
+						"s3BucketPath": {
+							"Ref": "s3BucketPathEnv"
+						},
+						"s3BucketPathSigned": {
+							"Ref": "s3BucketPathSignedEnv"
+						}
+					}
+				},
+				"EventInvokeConfig": {
+					"MaximumEventAgeInSeconds": 21600,
+					"MaximumRetryAttempts": 2
+				},
+				"Policies": [
+					{
+						"Statement": [
+							{
+								"Effect": "Allow",
+								"Action": [
+									"logs:CreateLogGroup",
+									"logs:CreateLogStream",
+									"logs:PutLogEvents"
+								],
+								"Resource": "*"
+							},
+							{
+								"Effect": "Allow",
+								"Action": [
+									"s3:*",
+									"s3-object-lambda:*"
+								],
+								"Resource": "*"
+							},
+							{
+								"Effect": "Allow",
+								"Action": [
+									"kms:DescribeKey",
+									"kms:GetPublicKey",
+									"kms:Sign",
+									"kms:Verify"
+								],
+								"Resource": "*"
+							}
+						]
+					}
+				]
+			}
+		},
+		"FunctionC2PASignLogGroup": {
+			"Type": "AWS::Logs::LogGroup",
+			"DeletionPolicy": "Retain",
+			"Properties": {
+				"LogGroupName": {
+					"Fn::Sub": "/aws/lambda/${FunctionC2PASign}"
+				}
+			}
+		},
+		"BucketC2PASign": {
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"BucketName": {
+					"Fn::Sub": "${AWS::StackName}-bucketc2p-${AWS::AccountId}"
+				},
+				"BucketEncryption": {
+					"ServerSideEncryptionConfiguration": [
+						{
+							"ServerSideEncryptionByDefault": {
+								"SSEAlgorithm": "aws:kms",
+								"KMSMasterKeyID": "alias/aws/s3"
+							}
+						}
+					]
+				},
+				"PublicAccessBlockConfiguration": {
+					"IgnorePublicAcls": true,
+					"RestrictPublicBuckets": true
+				}
+			}
+		}
+	}
+}
